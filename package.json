@@ -1,0 +1,17 @@
+{
+  "name": "Przelewy24MobileSDK",
+  "version": "0.1.0",
+  "description": "Przelewy24 Payment SDK for Cordova/Phonegap App",
+  "cordova": {
+    "id": "cdv-plugin-przelewy24-mobile-sdk",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "Konstantin Koulechov (TSN)",
+  "license": "ISC"
+}
