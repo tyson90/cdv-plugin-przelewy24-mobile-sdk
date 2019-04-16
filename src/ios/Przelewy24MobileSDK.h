@@ -5,7 +5,7 @@
 #import "MainViewController.h"
 
 @interface Przelewy24MobileSDK : CDVPlugin <P24Delegate> {
-    P24Config *p24Config;
+    P24TrnDirectParams *p24Config;
     P24 *p24;
 }
 
@@ -14,6 +14,6 @@
 
 - (id)init:(CDVInvokedUrlCommand*)command;
 
-- (void)paymentStart:(CDVInvokedUrlCommand*)command;
+- (void)startTrnDirect:(CDVInvokedUrlCommand*)command;
 
 @end

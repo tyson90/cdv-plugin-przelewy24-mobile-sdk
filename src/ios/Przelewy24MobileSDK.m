@@ -10,41 +10,66 @@
 
   self = [super init];
   if (self) {
-    p24Config = [[P24Config alloc] init];
+    self.command = command;
 
-    // for (NSString *el in command.arguments[0]) {
-    //   NSLog(@"%@ = %@", el, command.arguments[0][el]);
-    // }
+    // p24Config = [[P24Config alloc] init];
 
-    int merchantId = [command.arguments[0][@"merchantId"] intValue];
-    p24Config.merchantId = merchantId;
-
-    NSString *crc = command.arguments[0][@"crc"];
-    p24Config.crc = crc;
-
-    int timeLimit = [command.arguments[0][@"timeLimit"] intValue];
-    p24Config.timeLimit = timeLimit;
-
-    // is sandbox?
-    BOOL testMode = [command.arguments[0][@"enableTestMode"] boolValue];
-    [p24Config enableTestMode:testMode];
-
-    // only cards?
-    BOOL cardsOnly = [command.arguments[0][@"cardsOnly"] boolValue];
-    if (cardsOnly)
-    {
-      p24Config.p24Channel = P24_CHANNEL_CARDS;
+    for (NSString *el in command.arguments[0]) {
+      NSLog(@"%@ = %@", el, command.arguments[0][el]);
     }
 
-    p24 = [[P24 alloc] initWithConfig:p24Config delegate:self];
+    // int merchantId = [command.arguments[0][@"merchantId"] intValue];
+    // p24Config.merchantId = merchantId;
+    //
+    // NSString *crc = command.arguments[0][@"crc"];
+    // p24Config.crc = crc;
+    //
+    // int timeLimit = [command.arguments[0][@"timeLimit"] intValue];
+    // p24Config.timeLimit = timeLimit;
+    //
+    // // is sandbox?
+    // BOOL testMode = [command.arguments[0][@"enableTestMode"] boolValue];
+    // [p24Config enableTestMode:testMode];
+    //
+    // // only cards?
+    // BOOL cardsOnly = [command.arguments[0][@"cardsOnly"] boolValue];
+    // if (cardsOnly)
+    // {
+    //   p24Config.p24Channel = P24_CHANNEL_CARDS;
+    // }
+    //
+    // p24 = [[P24 alloc] initWithTransactionParams:p24Config delegate:self];
+    //
+    // NSLog(@"P24 INIT");
+    // NSLog(@"Merchant ID: %d", p24Config.merchantId);
+    // NSLog(@"CRC: %@", p24Config.crc);
+    // NSLog(@"Time Limit: %d", p24Config.timeLimit);
+    // NSLog(@"SANDBOX: %@", testMode ? @"TAK" : @"NIE");
+    // NSLog(@"Payment Channel: %d", p24Config.p24Channel);
+    // NSLog(@"Cards Only: %@", cardsOnly ? @"TAK" : @"NIE");
+    //
+    // P24Payment *p24Payment = [[P24Payment alloc] init];
+    //
+    // p24Payment.sessionId = command.arguments[0][@"sessionId"];
+    // p24Payment.amount = [command.arguments[0][@"amount"] intValue];
+    // p24Payment.transferLabel = command.arguments[0][@"transferLabel"];
+    // p24Payment.description = command.arguments[0][@"transferLabel"];
+    // p24Payment.clientName = command.arguments[0][@"clientName"];
+    // p24Payment.language = command.arguments[0][@"language"];
+    // p24Payment.currency = command.arguments[0][@"currency"];
+    // p24Payment.clientEmail = command.arguments[0][@"clientEmail"];
+    //
+    // // P24 URL Status
+    // p24Payment.p24UrlStatus = command.arguments[0][@"p24UrlStatus"];
+    // NSLog(@"P24 URL Status: %@", p24Payment.p24UrlStatus);
 
-    NSLog(@"P24 INIT");
-    NSLog(@"Merchant ID: %d", p24Config.merchantId);
-    NSLog(@"CRC: %@", p24Config.crc);
-    NSLog(@"Time Limit: %d", p24Config.timeLimit);
-    NSLog(@"SANDBOX: %@", testMode ? @"TAK" : @"NIE");
-    NSLog(@"Payment Channel: %d", p24Config.p24Channel);
-    NSLog(@"Cards Only: %@", cardsOnly ? @"TAK" : @"NIE");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CDVLaunchScreen" bundle:nil];
+    MainViewController * controller = [storyboard instantiateViewControllerWithIdentifier:@"P24View"];
+    [self.viewController presentViewController:controller animated:YES completion:nil];
+
+    self.controller = controller;
+
+    // [p24 startPayment:p24Payment inViewController:controller];
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"OK"];
   } else {
@@ -56,69 +81,20 @@
   return self;
 }
 
-- (void)paymentStart:(CDVInvokedUrlCommand *)command
+- (void)p24TransferOnSuccess
 {
-  self.command = command;
+  NSString *info = @"P24 TRANSFER ON SUCCESS";
+  NSLog(@"%@", info);
 
-  // for (NSString *el in command.arguments[0]) {
-  //   NSLog(@"%@ = %@", el, command.arguments[0][el]);
-  // }
-
-  P24Payment *p24Payment = [[P24Payment alloc] init];
-
-  p24Payment.sessionId = command.arguments[0][@"sessionId"];
-  p24Payment.amount = [command.arguments[0][@"amount"] intValue];
-  p24Payment.transferLabel = command.arguments[0][@"transferLabel"];
-  p24Payment.description = command.arguments[0][@"transferLabel"];
-  p24Payment.clientName = command.arguments[0][@"clientName"];
-  p24Payment.language = command.arguments[0][@"language"];
-  p24Payment.currency = command.arguments[0][@"currency"];
-  p24Payment.clientEmail = command.arguments[0][@"clientEmail"];
-
-  // P24 URL Status
-  p24Payment.p24UrlStatus = command.arguments[0][@"p24UrlStatus"];
-  NSLog(@"P24 URL Status: %@", p24Payment.p24UrlStatus);
-
-//  p24Payment.clientAddress = @"Ulica testowa";
-//  p24Payment.clientCity = @"Lublin";
-//  p24Payment.clientZipCode = @"20-111";
-//  p24Payment.clientCountry = @"PL";
-//  p24Payment.clientPhone = @"12423513";
-
-  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CDVLaunchScreen" bundle:nil];
-  MainViewController * controller = [storyboard instantiateViewControllerWithIdentifier:@"P24View"];
-  [self.viewController presentViewController:controller animated:YES completion:nil];
-
-  self.controller = controller;
-
-  [p24 startPayment:p24Payment inViewController:controller];
-}
-
-- (void)p24:(P24 *)p24 didFinishPayment:(P24Payment *)p24Payment withResult:(P24PaymentResult *)p24PaymentResult
-{
-  NSLog(@"P24 DID FINISH PAYMENT");
-  NSLog(@"Payment result code: %d, description: %@", p24PaymentResult.status.code, p24PaymentResult.status.description);
-  NSLog(@"Session id: %@", p24Payment.sessionId);
-  NSLog(@"Order id: %d", p24PaymentResult.orderId);
-
-  BOOL paymentOk = [p24PaymentResult isOk];
-
-  NSString *info = p24PaymentResult.status.description;
-
-  if (paymentOk) {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:info];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.command.callbackId];
-  } else {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:info];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.command.callbackId];
-  }
+  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:info];
+  [self.commandDelegate sendPluginResult:pluginResult callbackId:self.command.callbackId];
 
   [self.controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)p24:(P24 *)p24 didCancelPayment:(P24Payment *)p24Payment
+- (void)p24TransferOnCanceled
 {
-  NSString *info = @"P24 DID CANCEL PAYMENT";
+  NSString *info = @"P24 TRANSFER ON CANCELED";
   NSLog(@"%@", info);
 
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:info];
@@ -127,13 +103,13 @@
   [self.controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)p24:(P24 *)p24 didFailPayment:(P24Payment *)p24Payment withError:(NSError *)error
+- (void)p24TransferOnError: (NSString*) errorCode
 {
-  NSString *info = @"P24 DID FAIL PAYMENT";
+  NSString *info = @"P24 TRANSFER ON ERROR";
   NSLog(@"%@", info);
-  NSLog(@"Error: %@", [error localizedDescription]);
+  NSLog(@"Error: %@", errorCode);
 
-  NSString *full_info = [NSString stringWithFormat:@"%@: %@", info, [error localizedDescription]];
+  NSString *full_info = [NSString stringWithFormat:@"%@: %@", info, errorCode];
 
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:full_info];
   [self.commandDelegate sendPluginResult:pluginResult callbackId:self.command.callbackId];
