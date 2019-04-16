@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cdv-plugin-przelewy24-mobile-sdk" version="0.1.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cdv-plugin-przelewy24-mobile-sdk" version="0.1.1">
   <name>Przelewy24MobileSDK</name>
   <js-module name="Przelewy24MobileSDK" src="www/Przelewy24MobileSDK.js">
     <clobbers target="tsn.P24MobileSDK"/>
   </js-module>
-  
+
   <platform name="ios">
     <config-file parent="/*" target="config.xml">
       <feature name="Przelewy24MobileSDK">
         <param name="ios-package" value="Przelewy24MobileSDK"/>
       </feature>
     </config-file>
-    
+
     <header-file src="src/ios/Przelewy24MobileSDK.h"/>
     <source-file src="src/ios/Przelewy24MobileSDK.m"/>
   </platform>
