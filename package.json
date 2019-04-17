@@ -1,7 +1,7 @@
 {
   "name": "Przelewy24MobileSDK",
   "version": "0.2.0",
-  "description": "Przelewy24 Payment SDK for Cordova/Phonegap App",
+  "description": "Przelewy24 Payment SDK for Cordova/Phonegap App. Compatible and tested with przelewy24/p24-mobile-lib-ios@3.1.0",
   "cordova": {
     "id": "cdv-plugin-przelewy24-mobile-sdk",
     "platforms": [

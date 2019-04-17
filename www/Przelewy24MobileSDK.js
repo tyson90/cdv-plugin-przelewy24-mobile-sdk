@@ -1,33 +1,32 @@
+cordova.define("cdv-plugin-przelewy24-mobile-sdk.Przelewy24MobileSDK", function(require, exports, module) {
 var exec = require('cordova/exec');
 
 function Przelewy24MobileSDK() {
-	console.log('Przelewy24MobileSDK.js: is created');
+	console.log('Przelewy24MobileSDK.js: was created');
 }
 
 Przelewy24MobileSDK.prototype.startPayment = function(conf, payment, success, error) {
 	console.log('Przelewy24MobileSDK.startPayment()');
 
-	// this.init(conf, () => this.onStartPaymentSuccess(payment, success, error), () => this.onStartPaymentError())
-	exec(success, error, 'Przelewy24MobileSDK', 'startTrnDirect', [{ ...conf, ...payment}]);
+	this.init(conf, () => this.onStartPaymentSuccess({ ...conf, ...payment}, success, error), () => this.onStartPaymentError());
 };
 
-// TODO: remove it
-// Przelewy24MobileSDK.prototype.init = function(arg0, success, error) {
-// 		// console.log('Przelewy24MobileSDK.init()');
-//     exec(success, error, "Przelewy24MobileSDK", "init", [arg0]);
-// };
+Przelewy24MobileSDK.prototype.init = function(conf, success, error) {
+		console.log('Przelewy24MobileSDK.init()');
+  exec(success, error, "Przelewy24MobileSDK", "init", [conf]);
+};
 
-// TODO: remove it
-// Przelewy24MobileSDK.prototype.onStartPaymentError = function() {
-// 	alert('Nie udało się rozpocząć transakcji');
-// };
+Przelewy24MobileSDK.prototype.onStartPaymentError = function() {
+	alert('Nie udało się rozpocząć transakcji');
+};
 
-// TODO: remove it
-// Przelewy24MobileSDK.prototype.onStartPaymentSuccess = function(payment, success, error) {
-// 	// console.log('Przelewy24MobileSDK.onStartPaymentSuccess()');
-// 	// console.log(payment);
-//
-// 	exec(success, error, "Przelewy24MobileSDK", "paymentStart", [payment]);
-// };
+Przelewy24MobileSDK.prototype.onStartPaymentSuccess = function(payment, success, error) {
+	console.log('Przelewy24MobileSDK.onStartPaymentSuccess()');
+	// console.log(payment);
+
+	exec(success, error, "Przelewy24MobileSDK", "startPayment", [payment]);
+};
 
 module.exports = new Przelewy24MobileSDK();
+
+});
