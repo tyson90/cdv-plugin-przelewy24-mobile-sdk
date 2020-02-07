@@ -1,5 +1,6 @@
 {
   "name": "Przelewy24MobileSDK",
+  "title": "Przelewy24 Payment for Cordova/Phonegap",
   "version": "0.2.0",
   "description": "Przelewy24 Payment SDK for Cordova/Phonegap App. Compatible and tested with przelewy24/p24-mobile-lib-ios@3.1.0",
   "cordova": {
@@ -8,10 +9,25 @@
       "ios"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyson90/cdv-plugin-przelewy24-mobile-sdk.git",
+    "baseUrl": "https://github.com/tyson90/cdv-plugin-przelewy24-mobile-sdk"
+  },
   "keywords": [
     "ecosystem:cordova",
-    "cordova-ios"
+    "cordova-ios",
+    "przelewy24",
+    "payments",
+    "p24",
+    "paypro",
+    "checkout",
+    "ios"
   ],
-  "author": "Konstantin Koulechov (TSN)",
-  "license": "ISC"
+  "author": {
+    "name": "Konstantin Koulechov",
+    "email": "kostek.sni@gmail.pl"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
 }
